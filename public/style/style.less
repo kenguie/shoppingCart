@@ -1,6 +1,45 @@
-* {
-	border: 1px solid blue;
-}
+body {
+	background-color: aliceblue;
 
-#app {
+	#app {
+		margin: 0 auto;
+		width: 1480px;
+		
+		.container {
+			padding: 20px;
+			
+			ul {
+				display: grid;
+				padding: 0;
+		
+				li {
+					display: grid;
+					list-style: none;
+					font-size: 40px;
+					padding: 15px;
+					grid-template-rows: 100px;
+					grid-template-columns: 400px 400px 200px 200px;
+					grid-gap: 15px;
+		
+					span.item {
+						align-self: center;
+					}
+		
+					.amount {
+						align-self: center;
+					}
+		
+					.done {
+						background-color: green;
+						font-size: inherit;
+					}
+		
+					.delete {
+						background-color: red;
+						font-size: inherit;
+					}
+				}
+			}
+		}
+	}
 }
