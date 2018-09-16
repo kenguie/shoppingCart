@@ -11,6 +11,10 @@ body {
 			ul {
 				display: grid;
 				padding: 0;
+				border-bottom: 1px solid black;
+				border-top: 1px solid black;
+				padding-bottom: 25px;
+				padding-top: 25px;
 		
 				li {
 					display: grid;
@@ -29,16 +33,40 @@ body {
 						align-self: center;
 					}
 		
-					.done {
+					.doneButton {
 						background-color: green;
 						font-size: inherit;
 					}
 		
-					.delete {
+					.deleteButton {
 						background-color: red;
 						font-size: inherit;
 					}
 				}
+
+				.done {
+					text-decoration: line-through;
+				}
+
+				.notDone {
+					text-decoration: none;
+				}
+			}
+
+			form {
+				input {
+					font-size: 25px;
+					width: 570px;
+					margin: 10px;
+				}
+				button {
+					font-size: 25px;
+					width: 225px;
+				}
+			}
+
+			#footer {
+				text-align: center;
 			}
 		}
 	}
