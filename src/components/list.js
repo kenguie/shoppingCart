@@ -7,6 +7,7 @@ class List extends Component {
 		this.handleClick = this.handleClick.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.state = {
+			counterState: 1,
 			itemList: [],
 			strike: 'notDone',
 		}
@@ -14,53 +15,65 @@ class List extends Component {
 
 	formSubmit(e) {
 		const details = [];
+		let counter;
 		e.target.childNodes.forEach(function(el) {
-			if (el.tagName === 'INPUT')
-				details[el.name] = el.value
-			el.value = null
+			if (el.tagName === 'INPUT') {
+				details[el.name] = el.value;
+				el.value = null;
+			}
 		})
 		const newItems = this.state.itemList.slice()
-		newItems.push(details)
+		details.key = this.state.counterState;
+		details.strike = this.state.strike;
+		counter = this.state.counterState+1;
+		newItems.push(details);
 		this.setState({
-			itemList: newItems
+			itemList: newItems,
+			counterState: counter
 		})
 		e.preventDefault()
 	}
 
-	handleClick(e) {
-		if (this.state.strike === 'notDone'){
-			this.setState({
-				strike: 'done'
-			});
-		} else {
-			this.setState({
-				strike: 'notDone'
-			});
-		}
+	handleClick(currentItem) {
+		const filteredItems = this.state.itemList.filter(function (item) {
+
+			if (currentItem.strike === 'notDone' && currentItem.key === item.key) {
+				item.strike = 'done';
+			} else if (currentItem.strike === 'done' && currentItem.key === item.key) {
+				item.strike = 'notDone';
+			} 
+
+			return item;
+		});
+
+		this.setState({
+			itemList: filteredItems
+		});
 	}
 
-	handleDelete(index) {
-		console.log(index);
-		const newItems = this.state.itemList.splice(index, 1);
-    this.setState({
-			itemList: newItems
+	handleDelete(key) {
+		const filteredItems = this.state.itemList.filter(function (item) {
+			return (item.key !== key);
+		});
+	 
+		this.setState({
+			itemList: filteredItems
 		});
 	}
 
 	render() {
 		let itemList = [];
-		console.log(this.state.itemList);
 
 		return(
 			<div id="ToDo">
 				<ul>
 					{
-						this.state.itemList.map((item, index) => 
-							<li key={index+1} className={this.state.strike}>
+						this.state.itemList.map((item) => 
+							<li key={item.key} className={item.strike}>
 								<span className='item'>{item.name.toUpperCase()}</span>
 								<span className='amount'>{item.amt}</span>
-								<button className='doneButton' onClick={this.handleClick}>Done</button>
-								<button className='deleteButton' onClick={this.handleDelete.bind(this, index+1)}>Delete</button>
+								<button className='doneButton' onClick={this.handleClick.bind(this, item)}>Done</button>
+								<button className='deleteButton' onClick={this.handleDelete.bind(this, item.key)}>Delete</button>
 							</li>
 						)
 					}
